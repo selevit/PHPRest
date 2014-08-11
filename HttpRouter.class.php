@@ -2,10 +2,10 @@
 
 require dirname(__FILE__) . "/HttpResponse.class.php";
 
-class AjaxRouter
+class HttpRouter
 {
     /**
-     * Конструктор класса AjaxRouter
+     * Конструктор класса HttpRouter
      * @param array $handlers массив с именами ресурсов и обработчиков
      */
     public function __construct(array $handlers=array()) 

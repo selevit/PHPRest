@@ -1,6 +1,6 @@
 <?php
 
-require_once "AjaxRouter.class.php";
+require_once "HttpRouter.class.php";
 require_once "AjaxHandler.class.php";
 
 
@@ -28,6 +28,7 @@ class FooBarHandler extends AjaxHandler
     }
 }
 
+
 class FooBazHandler extends AjaxHandler
 {
     public function get() 
@@ -39,5 +40,5 @@ class FooBazHandler extends AjaxHandler
 }
 
 
-$router = new AjaxRouter($handlers);
+$router = new HttpRouter($handlers);
 $router->initHandler();
