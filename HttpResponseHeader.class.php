@@ -14,6 +14,15 @@ class HttpResponseHeader
     }
 
     /**
+     * Получить ключ заголовка
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
      * Установить ключ заголовка
      * @param string $value ключ заголовка
      */
@@ -23,6 +32,15 @@ class HttpResponseHeader
             throw new InvalidArgumentException(
                 "header key must be a non-empty string");
         $this->key = $value;
+    }
+
+    /**
+     * Получить значение заголовка
+     * @return string
+     */
+    public function getVal()
+    {
+        return $this->val;
     }
 
     /**
@@ -39,7 +57,7 @@ class HttpResponseHeader
 
     public function toString()
     {
-        return $this->key . ":" . $this->val;
+        return $this->key . ": " . $this->val;
     }
 
     /**
