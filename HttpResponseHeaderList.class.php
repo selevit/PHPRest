@@ -13,19 +13,32 @@ class HttpResponseHeaderList
     {
         if ($this->has($key))
             throw new LogicException("header '$key' already exists");
-        $headers[] = new HttpResponseHeader($key, $val);
+        $this->headers[] = new HttpResponseHeader($key, $val);
     }
 
     /**
      * Удалить хедер
      * @param string $key ключ
      */
-    public function remove($key, $val)
+    public function remove($key)
     {
         $index = $this->_index($key);
         if ($index === -1)
             throw new LogicException("header '$key' does not exists");
         unset($this->headers[$index]);
+    }
+
+    /**
+     * Получить значение заголовка с ключом key
+     * @param string $key ключ
+     * @return HttpResponseHeader
+     */
+    public function get($key)
+    {
+        $index = $this->_index($key);
+        if ($index === -1)
+            throw new OutOfBoundsException("No key found: $key");
+        return $this->headers[$index];
     }
 
     /**
@@ -71,9 +84,12 @@ class HttpResponseHeaderList
      */
     private function _index($key)
     {
-        for ($i = 0; $i < count($this->headers); $i++)
-            if ($this->headers[$i] === $key)
+        for ($i = 0; $i < count($this->headers); $i++) {
+            $header = $this->headers[$i];
+            $current_key = $header->getKey();
+            if (mb_strtolower($current_key) === mb_strtolower($key))
                 return $i;
+        }
         return -1;
     }
 
