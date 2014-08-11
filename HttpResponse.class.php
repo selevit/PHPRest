@@ -31,7 +31,7 @@ class HttpResponse
      */
     public function getStatus()
     {
-        return $status;
+        return $this->status;
     }
 
     /**
