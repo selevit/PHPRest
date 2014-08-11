@@ -37,7 +37,7 @@ class HttpRouter
             $cls_name = $handler[1];
             if (!class_exists($cls_name))
                 throw new LogicException("class `$cls_name` does not exists");
-            if (!is_subclass_of($cls_name, "AjaxHandler"))
+            if (!is_subclass_of($cls_name, "HttpHandler"))
                 throw new UnexpectedValueException(
                     "class $cls_name` must be a subclass of AjaxHandler");
         }
