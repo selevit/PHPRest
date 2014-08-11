@@ -18,4 +18,22 @@ abstract class AjaxHandler extends HttpHandler
             "Content-type", "application/json; charset=UTF-8");
         parent::write($this->serialize($data));
     }
+
+    protected function writeErrors($status=400)
+    {
+        $this->response->setStatus($status);
+        $this->write($this->getErrors());
+    }
+
+    protected function setError($key, $val)
+    {
+        $this->errors[$key] = $val;
+    }
+
+    protected function getErrors()
+    {
+        return $this->errors;
+    }
+
+    private $errors = array();
 }

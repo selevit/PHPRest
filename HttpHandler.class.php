@@ -18,6 +18,20 @@ abstract class HttpHandler
         $this->response->write($data); 
     }
 
+    protected function getQueryParam($name)
+    {
+        if (array_key_exists($name, $_GET))
+            return trim($_GET[$name]);
+        return null;
+    }
+
+    protected function getBodyParam($name)
+    {
+        if (array_key_exists($name, $_POST))
+            return trim($_POST[$name]);
+        return null;
+    }
+
     public function get()
     {
         $this->response->writeError(405); // Method not allowed
