@@ -7,7 +7,7 @@ require_once "AjaxHandler.class.php";
 $handlers = array(
     array("/^\/foo\/bar\/$/", "FooBarHandler"),
     array("/^\/foo\/baz\$/", "FooBazHandler"),
-    array("/^\/Test\.php\/news\/(.*)$/", "MyNewsHandler"),
+    array("/^\/Example\.php\/news\/(.*)$/", "MyNewsHandler"),
 );
 
 
@@ -15,7 +15,8 @@ class MyNewsHandler extends AjaxHandler
 {
     public function get($news_id)
     {
-        $this->write(array("This is my response", intval($news_id)));
+        $page = $this->getQueryParams("page");
+        $this->write(array("page", $page));
     }
 }
 
