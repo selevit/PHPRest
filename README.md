@@ -1,6 +1,6 @@
 # PHPRest
 
-This is tornado-like wrapper for creating HTTP RESTful services.
+Tornado-like wrapper for creating HTTP RESTful services.
 
 ## Handlers declaration
 
