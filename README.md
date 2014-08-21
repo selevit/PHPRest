@@ -2,9 +2,7 @@
 
 This is tornado-like wrapper for creating HTTP RESTful services.
 
-## Example
-
-### Handlers declaration
+## Handlers declaration
 
 ```php
 /**
@@ -19,7 +17,7 @@ $handlers = array(
 );
 ```
 
-### Implementation of handlers
+## Implementation of handlers
 
 ```php
 require_once "AjaxHandler.class.php";
@@ -62,7 +60,7 @@ class ProductReviewHandler extends PHPRest\AjaxHandler {};
 class NewsHandler extends PHPRest\AjaxHandler {};
 ```
 
-### Setting up HTTP router
+## Setting up HTTP router
 
 ```php
 require_once "HttpRouter.class.php";
