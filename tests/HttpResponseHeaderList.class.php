@@ -26,5 +26,33 @@ class HttpResponseHeaderListTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->headers->has("Content-Length"));
     }
 
+    public function testGet()
+    {
+        $this->headers->set("Accept-Encoding", "gzip,deflate");
+        $header = $this->headers->get("accept-encoding");
+        $this->assertInstanceOf("PHPRest\HttpResponseHeader", $header);
+        $this->assertEquals($header->getVal(), "gzip,deflate");
+    }
+
+    public function testSet()
+    {
+        $this->headers->set("Content-Type", "text/html");
+        $this->assertTrue($this->headers->has("content-type"));
+        $this->assertEquals($this->headers->get("content-type")->getVal(),
+            "text/html");
+        $this->headers->set("content-type", "text/plain");
+        $this->assertEquals($this->headers->get("content-type")->getVal(),
+            "text/plain");
+    }
+
+    public function testHas()
+    {
+        $this->headers->set("Content-Type", "text/html");
+        $this->assertTrue($this->headers->has("content-type"));
+        $this->assertTrue($this->headers->has("Content-Type"));
+        $this->assertTrue($this->headers->has("CONTENT-TYPE"));
+        $this->assertFalse($this->headers->has("__CONTENT-TYPE"));
+    }
+
     private $headers;
 }
