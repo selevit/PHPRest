@@ -4,23 +4,27 @@ This is tornado-like wrapper for creating HTTP RESTful services.
 
 ## Example
 
+### Handlers declaration
+
 ```php
 <?php
-
-require_once "HttpRouter.class.php";
-require_once "AjaxHandler.class.php";
-
-
 /**
  * Declare the URL handlers.
  * Handler must be an array: array("/url-pattern/", "\\Name\\Of\\Class")
  * first element is string (for string URL path match) or regexp
 */
 $handlers = array(
-    array("/ajax/register/", "\\AjaxRegisterHandler"),
-    array("/^\/product\/([0-9]+)\/reviews\/$/", "\\ProductReviewHandler"),
-    array("/^\/Example\.php\/news\/(.*)$/", "\\NewsHandler"),
+    array("/ajax/register/", '\\AjaxRegisterHandler'),
+    array("#^/product/([0-9]+)/reviews/$#", '\\ProductReviewHandler'),
+    array("#^/Example.php/news/(.*)$#", '\\NewsHandler'),
 );
+```
+
+### Implementation of handlers
+
+```
+<?php
+require_once "AjaxHandler.class.php";
 
 /**
  * All handlers must be subclass of PHPRest\HttpHandler
@@ -58,9 +62,17 @@ class AjaxRegisterHandler extends PHPRest\AjaxHandler
 
 class ProductReviewHandler extends PHPRest\AjaxHandler {};
 class NewsHandler extends PHPRest\AjaxHandler {};
+```
+
+### Setting up HTTP router
+
+```
+<?php
+require_once "HttpRouter.class.php";
 
 // Initialize HTTP router
 $router = new PHPRest\HttpRouter($handlers);
 // Initialize HTTP requests handler
 $router->initHandler();
 ```
+

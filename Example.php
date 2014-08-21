@@ -10,9 +10,9 @@ require_once "AjaxHandler.class.php";
  * first element is string (for string URL path match) or regexp
 */
 $handlers = array(
-    array("/ajax/register/", "\\AjaxRegisterHandler"),
-    array("/^\/product\/([0-9]+)\/reviews\/$/", "\\ProductReviewHandler"),
-    array("/^\/Example\.php\/news\/(.*)$/", "\\NewsHandler"),
+    array("/ajax/register/", '\\AjaxRegisterHandler'),
+    array("#^/product/([0-9]+)/reviews/$#", '\\ProductReviewHandler'),
+    array("#^/Example.php/news/(.*)$#", '\\NewsHandler'),
 );
 
 /**
