@@ -31,7 +31,7 @@ class HttpResponseHeader
     public function setKey($value)
     {
         if (!is_string($value) || empty($value))
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 "header key must be a non-empty string");
         $this->key = $value;
     }
@@ -52,7 +52,7 @@ class HttpResponseHeader
     public function setVal($value)
     {
         if (!is_string($value) || empty($value))
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 "header value must be a non-empty string");
         $this->val = $value;
     }

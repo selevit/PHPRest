@@ -1,8 +1,10 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/../HttpResponseHeader.class.php";
 
-class HttpResponseHeaderTest extends PHPUnit_Framework_TestCase
+class HttpResponseHeaderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -28,12 +30,12 @@ class HttpResponseHeaderTest extends PHPUnit_Framework_TestCase
 
         try {
             $this->header->setKey("");
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals($e->getMessage(), "header key must be a non-empty string");
         }
         try {
             $this->header->setKey(array());
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals($e->getMessage(), "header key must be a non-empty string");
         }
     }
@@ -45,12 +47,12 @@ class HttpResponseHeaderTest extends PHPUnit_Framework_TestCase
 
         try {
             $this->header->setVal("");
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals($e->getMessage(), "header value must be a non-empty string");
         }
         try {
             $this->header->setVal(array());
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals($e->getMessage(), "header value must be a non-empty string");
         }
     }

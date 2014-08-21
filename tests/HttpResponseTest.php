@@ -1,8 +1,10 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/../HttpResponse.class.php";
 
-class HttpResponseTest extends PHPUnit_Framework_TestCase
+class HttpResponseTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -15,19 +17,19 @@ class HttpResponseTest extends PHPUnit_Framework_TestCase
        $this->assertEquals($this->response->getStatus(), 404);
        try {
            $this->response->setStatus("foo");
-       } catch (InvalidArgumentException $e) {
+       } catch (\InvalidArgumentException $e) {
            $message = $e->getMessage();
            $this->assertEquals($message, "value must be integer");
        }
        try {
            $this->response->setStatus(-10);
-       } catch (OutOfRangeException $e) {
+       } catch (\OutOfRangeException $e) {
            $message = $e->getMessage();
            $this->assertEquals($message, "value must be > 0 and < 600");
        }
        try {
            $this->response->setStatus(600);
-       } catch (OutOfRangeException $e) {
+       } catch (\OutOfRangeException $e) {
            $message = $e->getMessage();
            $this->assertEquals($message, "value must be > 0 and < 600");
        }
@@ -49,7 +51,7 @@ class HttpResponseTest extends PHPUnit_Framework_TestCase
 
         try {
             $this->response->setBody(100);
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals($e->getMessage(), "body must be a string");
         }
     }

@@ -1,8 +1,10 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/../HttpResponseHeaderList.class.php";
 
-class HttpResponseHeaderListTest extends PHPUnit_Framework_TestCase
+class HttpResponseHeaderListTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -13,7 +15,7 @@ class HttpResponseHeaderListTest extends PHPUnit_Framework_TestCase
     {
         $this->headers->add("Content-type", "application/json");
         $header = $this->headers->get("Content-Type");
-        $this->assertInstanceOf("HttpResponseHeader", $header);
+        $this->assertInstanceOf("PHPRest\HttpResponseHeader", $header);
         $this->assertEquals($header->getVal(), "application/json");
     }
 
