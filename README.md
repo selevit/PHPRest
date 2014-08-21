@@ -7,7 +7,6 @@ This is tornado-like wrapper for creating HTTP RESTful services.
 ### Handlers declaration
 
 ```php
-<?php
 /**
  * Declare the URL handlers.
  * Handler must be an array: array("/url-pattern/", "\\Name\\Of\\Class")
@@ -22,8 +21,7 @@ $handlers = array(
 
 ### Implementation of handlers
 
-```
-<?php
+```php
 require_once "AjaxHandler.class.php";
 
 /**
@@ -66,8 +64,7 @@ class NewsHandler extends PHPRest\AjaxHandler {};
 
 ### Setting up HTTP router
 
-```
-<?php
+```php
 require_once "HttpRouter.class.php";
 
 // Initialize HTTP router
