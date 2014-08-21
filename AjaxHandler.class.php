@@ -1,5 +1,7 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/HttpHandler.class.php";
 
 abstract class AjaxHandler extends HttpHandler

@@ -1,5 +1,7 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . '/HttpResponseHeader.class.php';
 
 class HttpResponseHeaderList
@@ -12,7 +14,7 @@ class HttpResponseHeaderList
     public function add($key, $val)
     {
         if ($this->has($key))
-            throw new LogicException("header '$key' already exists");
+            throw new \LogicException("header '$key' already exists");
         $this->headers[] = new HttpResponseHeader($key, $val);
     }
 
@@ -24,7 +26,7 @@ class HttpResponseHeaderList
     {
         $index = $this->_index($key);
         if ($index === -1)
-            throw new LogicException("header '$key' does not exists");
+            throw new \LogicException("header '$key' does not exists");
         unset($this->headers[$index]);
     }
 
@@ -37,7 +39,7 @@ class HttpResponseHeaderList
     {
         $index = $this->_index($key);
         if ($index === -1)
-            throw new OutOfBoundsException("No key found: $key");
+            throw new \OutOfBoundsException("No key found: $key");
         return $this->headers[$index];
     }
 

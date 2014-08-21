@@ -1,6 +1,9 @@
 <?php
 
+namespace PHPRest;
+
 require dirname(__FILE__) . "/HttpResponse.class.php";
+require dirname(__FILE__) . "/HttpHandler.class.php";
 
 class HttpRouter
 {
@@ -17,29 +20,29 @@ class HttpRouter
 
     /**
      * Установить значение handlers
-     * @param array $handlers массив с именами ресурсов и обработчиков
+     * @param array $handlers массив с имеfнами ресурсов и обработчиков
      * в формате array("[regex]" => "Handler\Class\Name")
      */
     public function setHandlers(array $handlers)
     {
         if (!count($handlers))
-            throw new LengthException("count(handlers) == 0");
+            throw new \LengthException("count(handlers) == 0");
         foreach ($handlers as $handler) {
             if (count($handler) !== 2)
-                throw new LengthException(
+                throw new \LengthException(
                     "handler array must have 2 elements");
             if (!is_string($handler[0]))
-                throw new UnexpectedValueException(
+                throw new \UnexpectedValueException(
                     "handler[0] must be a string");
             if (!is_string($handler[1]))
-                throw new UnexpectedValueException(
+                throw new \UnexpectedValueException(
                     "handler[1] must be a string");
             $cls_name = $handler[1];
             if (!class_exists($cls_name))
-                throw new LogicException("class `$cls_name` does not exists");
-            if (!is_subclass_of($cls_name, "HttpHandler"))
-                throw new UnexpectedValueException(
-                    "class $cls_name` must be a subclass of AjaxHandler");
+                throw new \LogicException("class `$cls_name` does not exists");
+            if (!is_subclass_of($cls_name, "\PHPRest\HttpHandler"))
+                throw new \UnexpectedValueException(
+                    "class $cls_name` must be a subclass of HttpHandler");
         }
         $this->handlers = $handlers;
     }
@@ -51,7 +54,7 @@ class HttpRouter
     public function processRequest($path)
     {
         if (!$this->isInitialized())
-            throw new LogicException("No handlers found");
+            throw new \LogicException("No handlers found");
         $handler_cls = null;
         $handler_args = array();
         foreach ($this->handlers as $handler) {

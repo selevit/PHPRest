@@ -1,5 +1,7 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/HttpResponseHeaderList.class.php";
 
 class HttpResponse
@@ -19,9 +21,9 @@ class HttpResponse
     public function setStatus($value)
     {
         if (!is_integer($value))
-            throw new InvalidArgumentException("value must be integer");
+            throw new \InvalidArgumentException("value must be integer");
         if ($value <= 0 || $value >= 600)
-            throw new OutOfRangeException("value must be > 0 and < 600");
+            throw new \OutOfRangeException("value must be > 0 and < 600");
        $this->status = $value; 
     }
 
@@ -41,7 +43,7 @@ class HttpResponse
     public function setBody($value)
     {
         if (!is_string($value))
-            throw new InvalidArgumentException("body must be a string");
+            throw new \InvalidArgumentException("body must be a string");
         $this->body = $value;
     }
 
@@ -126,7 +128,7 @@ class HttpResponse
             case 505: $text = "HTTP Version not supported"; break;
         }
         if (!$text)
-            throw new UnexpectedValueException("Unknown http status code");
+            throw new \UnexpectedValueException("Unknown http status code");
         return $text;
     }
 
@@ -140,8 +142,7 @@ class HttpResponse
     public function write($body=null)
     {
         if ($this->isFinished())
-            throw new LogicException("HTTP response already finished");
-
+            throw new \LogicException("HTTP response already finished");
         if ($body)
             $this->setBody($body);
         header($this->getHttpStatusString());
@@ -169,7 +170,7 @@ class HttpResponse
     public function finish()
     {
         if ($this->is_finished)
-            throw new LogicException("HTTP response already finished");
+            throw new \LogicException("HTTP response already finished");
         $this->is_finished = true;
     }
 

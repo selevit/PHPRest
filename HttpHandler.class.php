@@ -1,13 +1,15 @@
 <?php
 
+namespace PHPRest;
+
 require_once dirname(__FILE__) . "/HttpResponse.class.php";
 
 abstract class HttpHandler
 {
     final public function __construct($response)
     {
-        if (!$response instanceof HttRpesponse)
-            throw new InvalidArgumentException(
+        if (!$response instanceof HttpResponse)
+            throw new \InvalidArgumentException(
                 "response must be instance of HttpResponse");
         $this->response = $response;
         $this->req_query = $_GET;

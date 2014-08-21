@@ -5,13 +5,13 @@ require_once "AjaxHandler.class.php";
 
 
 $handlers = array(
-    array("/^\/foo\/bar\/$/", "FooBarHandler"),
-    array("/^\/foo\/baz\$/", "FooBazHandler"),
-    array("/^\/Example\.php\/news\/(.*)$/", "MyNewsHandler"),
+    array("/^\/foo\/bar\/$/", "\\FooBarHandler"),
+    array("/^\/foo\/baz\$/", "\\FooBazHandler"),
+    array("/^\/Example\.php\/news\/(.*)$/", "\\MyNewsHandler"),
 );
 
 
-class MyNewsHandler extends AjaxHandler
+class MyNewsHandler extends PHPRest\AjaxHandler
 {
     public function get($news_id)
     {
@@ -21,7 +21,7 @@ class MyNewsHandler extends AjaxHandler
 }
 
 
-class FooBarHandler extends AjaxHandler
+class FooBarHandler extends PHPRest\AjaxHandler
 {
     public function get() 
     {
@@ -30,7 +30,7 @@ class FooBarHandler extends AjaxHandler
 }
 
 
-class FooBazHandler extends AjaxHandler
+class FooBazHandler extends PHPRest\AjaxHandler
 {
     public function get() 
     {
@@ -40,6 +40,5 @@ class FooBazHandler extends AjaxHandler
     }
 }
 
-
-$router = new HttpRouter($handlers);
+$router = new PHPRest\HttpRouter($handlers);
 $router->initHandler();

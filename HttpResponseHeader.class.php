@@ -1,5 +1,7 @@
 <?php
 
+namespace PHPRest;
+
 class HttpResponseHeader
 {
     /**
