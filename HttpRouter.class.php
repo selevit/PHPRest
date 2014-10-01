@@ -84,7 +84,7 @@ class HttpRouter
             $this->response->writeError(501); // Not implemented
             return;
         }
-        call_user_method_array($method, $handler, $handler_args);
+        call_user_func_array(array($handler, $method), $handler_args);
     }
 
     public function initHandler()

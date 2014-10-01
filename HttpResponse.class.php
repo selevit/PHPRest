@@ -77,6 +77,16 @@ class HttpResponse
     }
 
     /**
+     * Проверить, установлен ли хедер
+     * @param $key ключ
+     * @return boolean
+     */
+    public function hasHeader($key)
+    {
+        return $this->headers->has($key);
+    }
+
+    /**
      * Получить HTTP-заголовки
      * @return HttpResponseHeaders заголовки ответа
      */

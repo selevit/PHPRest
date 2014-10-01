@@ -16,8 +16,9 @@ abstract class AjaxHandler extends HttpHandler
 
     protected function write($data)
     {
-        $this->response->setHeader(
-            "Content-type", "application/json; charset=UTF-8");
+        if (!$this->response->hasHeader('Content-Type'))
+            $this->response->setHeader(
+                "Content-type", "application/json; charset=UTF-8");
         parent::write($this->serialize($data));
     }
 
