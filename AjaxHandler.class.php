@@ -38,5 +38,10 @@ abstract class AjaxHandler extends HttpHandler
         return $this->errors;
     }
 
+    protected function hasErrors()
+    {
+        return !!$this->errors;
+    }
+
     private $errors = array();
 }
