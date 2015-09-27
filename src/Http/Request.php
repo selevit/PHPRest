@@ -41,31 +41,45 @@ class Request
     protected $headers;
 
     /**
+     * @var string HTTP header name
+     */
+    protected $method;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $headers = \http_get_request_headers();
         $this->headers = new HeaderList();
-        foreach ($headers as $header) {
-            $parts = implode(':', $header);
-            $this->headers->set(trim($parts[0]), trim($parts[1]));
+    }
+
+    /**
+     * Parse HTTP request header list
+     *
+     * @param  array  $headers list of request headers
+     *
+     * @return Request current object
+     */
+    public function parseHeaders(array $headers)
+    {
+        foreach ($headers as $name => $value) {
+            $this->headers->set($name, $value);
         }
-        $this->parse($_SERVER);
-        $this->decodeBody(\file_get_contents('php://input'));
-        $this->setFiles($_FILES);
-        $this->setCookie($_COOKIE);
+        return $this;
     }
 
     /**
      * Parse global server object
      *
-     * @return Request текущий объект
+     * @param array $server superglobal $_SERVER array
+     *
+     * @return Request current object
      */
     public function parse(array $server)
     {
         $this->path = explode('?', $server['REQUEST_URI'], 2);
         parse_str($server['QUERY_STRING'], $this->query);
+        $this->method = $server["REQUEST_METHOD"];
         return $this;
     }
 
@@ -74,7 +88,7 @@ class Request
      *
      * @param string $input data from php://input
      *
-     * @return Request текущий объект
+     * @return Request current object
      */
     public function decodeBody($input)
     {
@@ -87,7 +101,7 @@ class Request
      *
      * @param array|null $files global $_FILES array
      *
-     * @return Request текущий объект
+     * @return Request current object
      */
     public function setFiles($files)
     {
@@ -106,5 +120,15 @@ class Request
     {
         $this->cookie = $cookie;
         return $this;
+    }
+
+    /**
+     * Get HTTP method name
+     *
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
     }
 }

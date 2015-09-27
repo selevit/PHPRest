@@ -25,10 +25,10 @@ abstract class Handler
      *
      * @param Response $response HTTP-ответ
      */
-    public function __construct(Response $response)
+    public function __construct(Response $response, Request $request)
     {
         $this->response = $response;
-        $this->request = null; // TODO
+        $this->request = $request;
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class Handler
      */
     public function get()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class Handler
      */
     public function post()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class Handler
      */
     public function put()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class Handler
      */
     public function delete()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class Handler
      */
     public function head()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class Handler
      */
     public function patch()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class Handler
      */
     public function trace()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class Handler
      */
     public function connect()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 
     /**
@@ -118,6 +118,6 @@ abstract class Handler
      */
     public function options()
     {
-        $this->response->throwError(405);
+        $this->response->flushError(405);
     }
 }

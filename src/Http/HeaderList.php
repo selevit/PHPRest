@@ -110,7 +110,7 @@ class HeaderList
         $count = count($this->headers);
         for ($i = 0; $i < count($this->headers); $i++) {
             $header = $this->headers[$i];
-            $current_key = $header->getKey();
+            $current_key = $header->getName();
             if (strtolower($current_key) === strtolower($key)) {
                 return $i;
             }

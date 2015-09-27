@@ -91,7 +91,7 @@ class Router
         $handler_class = null;
         $handler_args = array();
         $response = new Response();
-        $request = null; //new Request(); DEBUG
+        $request = $this->buildRequestObject();
 
         foreach ($this->handlers as $handler) {
             $matches = array();
@@ -140,14 +140,15 @@ class Router
     }
 
     /**
-     * Получить объект запроса клиента
+     * Построить объект запроса клиента
      *
      * @return Request
      */
-    public function getRequestObject()
+    public function buildRequestObject()
     {
         $request = new Request();
         $request->parse($_SERVER)
+            ->parseHeaders(getallheaders())
             ->decodeBody(file_get_contents("php://input"))
             ->setFiles($_FILES)
             ->setCookie($_COOKIE);
