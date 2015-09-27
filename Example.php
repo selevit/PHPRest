@@ -1,58 +1,83 @@
 <?php
 
-require_once "HttpRouter.class.php";
-require_once "AjaxHandler.class.php";
+namespace PHPRest\Example;
 
+require __DIR__ . '/src/bootstrap.php';
 
-/**
- * Declare the URL handlers.
- * Handler must be an array: array("/url-pattern/", "\\Name\\Of\\Class")
- * first element is string (for string URL path match) or regexp
-*/
-$handlers = array(
-    array("/ajax/register/", '\\AjaxRegisterHandler'),
-    array("#^/product/([0-9]+)/reviews/$#", '\\ProductReviewHandler'),
-    array("#^/Example.php/news/(.*)$#", '\\NewsHandler'),
+use PHPRest;
+use PHPRest\Http\Handlers\Handler;
+use PHPRest\Http\Response\JSONResponse;
+use PHPRest\Router\RouteList;
+
+$routes = array(
+    array('/ajax/register/', __NAMESPACE__ . '\RegisterHandler'),
+    array('#^/product/([0-9]+)/reviews/$', __NAMESPACE__ . '\RegisterHandler'),
+    array('#^/Example.php/news/(.*)$#', __NAMESPACE__ . '\NewsHandler'),
 );
 
 /**
  * All handlers must be subclass of PHPRest\HttpHandler
  */
-class AjaxRegisterHandler extends PHPRest\AjaxHandler
+class RegisterHandler extends Handler
 {
     /**
-     * handler POST-requests
+     * Handle POST requests
      */
-    public function post() 
+    public function post()
     {
         // Get POST params
-        $login = $this->getBodyParam("login");
-        $pass = $this->getBodyParam("pass");
+        $login = $this->request->body->param("login");
+        $password = $this->request->body->param("password");
+
+        $params = $this->request->body->all();
+        $some_params = $this->request->body->params(
+            array("login", "password")
+        );
+        $some_params = $this->request->body->params("login", "password");
+        $some_params = $this->request->body->params(
+            array("password", null),
+            array("email", "default@mail.com"),
+            array("username", "default username"),
+        );
 
         // Get URL-query params
-        $redirect_url = $this->getQueryParam("next");
+        $redirect_url = $this->request->query->get("next", "/default-url");
+        $response = new JSONResponse();
 
         // Check form fields
-        if (!$login) $this->setError("login", "Required field");
-        if (!$pass) $this->setError("pass", "Required field");
-
-        // If errors found, show it
-        if ($this->getErrors()) {
-            $this->writeErrors();
-            return;
+        if (!$login) {
+            $response->setFieldError("login", "Required field");
         }
+        if (!$password) {
+            $response->setFieldError("password", "Required field");
+        }
+
+        if ($response->hasErrors()) {
+            $response->writeAllErrors();
+            return $response;
+        }
+
         // Do other stuff...
 
-        $response = array("user_id" => 100);
-        $this->write($response);
+        $response->setData(array("user_id" => 100));
+        return $response;
     }
 }
 
+/**
+ * Product reviews handler
+ */
+class ProductReviewHandler extends Handler
+{
+}
 
-class ProductReviewHandler extends PHPRest\AjaxHandler {};
-class NewsHandler extends PHPRest\AjaxHandler {};
+/**
+ * News handler
+ */
+class NewsHandler extends Handler
+{
+}
 
 // Initialize HTTP router
-$router = new PHPRest\HttpRouter($handlers);
-// Initialize HTTP requests handler
-$router->initHandler();
+$router = new PHPRest\Routers\Base($routes);
+$router->run();
