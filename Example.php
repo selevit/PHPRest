@@ -2,12 +2,11 @@
 
 namespace PHPRest\Example;
 
-require __DIR__ . '/src/bootstrap.php';
+require __DIR__ . '/bootstrap.php';
 
 use PHPRest;
-use PHPRest\Http\Handlers\Handler;
-use PHPRest\Http\Response\JSONResponse;
-use PHPRest\Router\RouteList;
+use PHPRest\Http\Handler;
+use PHPRest\Http\JSONResponse;
 
 $routes = array(
     array('/ajax/register/', __NAMESPACE__ . '\RegisterHandler'),
@@ -33,11 +32,13 @@ class RegisterHandler extends Handler
         $some_params = $this->request->body->params(
             array("login", "password")
         );
+
         $some_params = $this->request->body->params("login", "password");
+
         $some_params = $this->request->body->params(
             array("password", null),
             array("email", "default@mail.com"),
-            array("username", "default username"),
+            array("username", "default username")
         );
 
         // Get URL-query params
@@ -79,5 +80,5 @@ class NewsHandler extends Handler
 }
 
 // Initialize HTTP router
-$router = new PHPRest\Routers\Base($routes);
+$router = new PHPRest\Router($routes);
 $router->run();

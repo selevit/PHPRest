@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPRest\Http\Response;
+namespace PHPRest\Http;
 
 /**
  * JSON HTTP Response

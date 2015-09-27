@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPRest\Http\Header;
+namespace PHPRest\Http;
 
 use LogicException;
 use OutOfBoundsException;
@@ -99,20 +99,6 @@ class HeaderList
     }
 
     /**
-     * Get string representation of the header list
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        $result = "";
-        foreach ($this->headers as $header) {
-            $result .= $header->toString() . "\r\n";
-        }
-        return $result;
-    }
-
-    /**
      * Get index of the header by name
      *
      * @param string $name header name
@@ -130,6 +116,16 @@ class HeaderList
             }
         }
         return -1;
+    }
+
+    /**
+     * Write all headers
+     */
+    public function write()
+    {
+        foreach ($this->headers as $header) {
+            $header->write();
+        }
     }
 
     /**

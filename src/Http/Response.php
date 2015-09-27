@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPRest\Http\Response;
+namespace PHPRest\Http;
 
 use InvalidArgumentException;
 use UnexpectedValueException;
@@ -265,7 +265,7 @@ class Response
     private function getStatusString()
     {
         $text = self::getStatusText($this->status);
-        return sprintf('%s %s %s', $this->proto, $this->status, $this->text);
+        return sprintf('%s %s %s', $this->proto, $this->status, $text);
     }
 
     /**

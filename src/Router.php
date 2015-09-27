@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPRest\Routers;
+namespace PHPRest;
 
 use PHPRest\Http\Response;
 use PHPRest\Http\Request;
@@ -11,7 +11,7 @@ use UnexpectedValueException;
 /**
  * Base router
  */
-class Base
+class Router
 {
     /**
      * Constructor
@@ -49,7 +49,7 @@ class Base
                 throw new LengthException(
                     "handler array must have 2 elements"
                 );
-            )
+            }
             if (!is_string($handler[0])) {
                 throw new UnexpectedValueException(
                     "handler[0] must be a string"
@@ -91,6 +91,7 @@ class Base
         $handler_class = null;
         $handler_args = array();
         $response = new Response();
+        $request = null; //new Request(); DEBUG
 
         foreach ($this->handlers as $handler) {
             $matches = array();
@@ -117,8 +118,8 @@ class Base
             return $response->flushError(404);
         }
 
-        $handler = new $handler_class($this->response);
-        $method = strtolower($this->request->getMethod());
+        $handler = new $handler_class($response, $request);
+        $method = strtolower($request->getMethod());
 
         if (!method_exists($handler, $method)) {
             return $response->flushError(501); // Not implemented

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPRest\Http\Request;
+namespace PHPRest\Http;
 
-use PHPRest\Http\Headers\HeaderList;
-use PHPRest\Http\Headers\Header;
+use PHPRest\Http\HeaderList;
+use PHPRest\Http\Header;
 
 /**
  * Http request
@@ -45,12 +45,16 @@ class Request
      */
     public function __construct()
     {
-        $headers = http_get_request_headers();
+        $headers = \http_get_request_headers();
         $this->headers = new HeaderList();
         foreach ($headers as $header) {
             $parts = implode(':', $header);
             $this->headers->set(trim($parts[0]), trim($parts[1]));
         }
+        $this->parse($_SERVER);
+        $this->decodeBody(\file_get_contents('php://input'));
+        $this->setFiles($_FILES);
+        $this->setCookie($_COOKIE);
     }
 
     /**

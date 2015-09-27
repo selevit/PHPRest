@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPRest\Http\Header;
+namespace PHPRest\Http;
 
 use InvalidArgumentException;
 
@@ -36,7 +36,7 @@ class Header
      *
      * @param string $value header name
      */
-    public function setKey($value)
+    public function setName($value)
     {
         if (!is_string($value) || empty($value)) {
             throw new InvalidArgumentException(
@@ -77,6 +77,14 @@ class Header
     public function toString()
     {
         return $this->name . ': ' . $this->value;
+    }
+
+    /**
+     * Write header to STDOUT
+     */
+    public function write()
+    {
+        header($this->toString());
     }
 
     /**

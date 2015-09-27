@@ -8,7 +8,7 @@ use PHPRest\Http\Request;
 /**
  * Base HTTP handler
  */
-abstract class BaseHandler
+abstract class Handler
 {
     /**
      * @var Response HTTP response
